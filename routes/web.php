@@ -11,6 +11,12 @@
 |
 */
 
+// making a model, as an example:
+
+class User extends Illuminate\Database\Eloquent\Model {
+    
+}
+
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
