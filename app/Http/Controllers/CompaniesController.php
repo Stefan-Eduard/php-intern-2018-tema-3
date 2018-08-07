@@ -25,7 +25,8 @@ class CompaniesController extends Controller
     {
         $companies = Company::all();
         
-        return json_encode($companies);
+        return response()->json($companies);
+        // return json_encode($companies);
     }
 
     public function index($id)
@@ -34,8 +35,8 @@ class CompaniesController extends Controller
 
         $company = Company::find($id);
 
-
-        return json_encode($company);
+        return response()->json($company);
+        // return json_encode($company);
     }
 
     // public function create()
@@ -48,8 +49,11 @@ class CompaniesController extends Controller
         $company = new \App\Company;
         $company->name = $request['name'];
         $company->description = $request['description'];
-        return json_encode($company); 
-        // $company->save();
+
+        $company->save();
+
+        return response()->json($company);
+        // return json_encode($company); 
     }
 
     public function edit(Request $request, $id)
@@ -59,7 +63,11 @@ class CompaniesController extends Controller
             $company->name=$request->get('name');
         if($request->get('description'))
             $company->description=$request->get('description');
-        return json_encode($company);
+
+        $company->save();
+
+        return response()->json($company);
+        // return json_encode($company);
     }
 
     public function update(Request $request, $id) // update has to "update" everything
@@ -67,14 +75,19 @@ class CompaniesController extends Controller
         $company= Company::find($id);
         $company->name=$request->get('name');
         $company->description=$request->get('description');
-        return json_encode($company);
-        // $company->save();
+
+        $company->save();
+
+        return response()->json($company);
+        // return json_encode($company);
     }
 
     public function destroy($id)
     {
         $company = Company::find($id);
         $company->delete();
-        return redirect('companies')->with('success', 'Information has been deleted');
+
+        return response()->json('Company removed successfully');
+        // return redirect('companies')->with('success', 'Information has been deleted');
     }
 }

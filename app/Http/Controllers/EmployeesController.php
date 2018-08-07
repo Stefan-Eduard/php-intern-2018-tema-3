@@ -22,22 +22,28 @@ class EmployeesController extends Controller
     public function show(){
         $employees = Employee::all();
 
-        return json_encode($employees);
+        return response()->json($employees);
+        // return json_encode($employees);
     }
 
     //Return employee by id
     public function index($id){
         $employee = Employee::find($id);
 
-        return json_encode($employee);
+        return response()->json($employee);
+        // return json_encode($employee);
     }
 
     public function store(Request $request)
     {
         $employee = new \App\Employee;
         $employee->name = $request['name'];
-        return json_encode($employee); 
-        // $employee->save();
+
+        $employee->save();
+
+        return response()->json($employee);
+        // return json_encode($employee); 
+        
     }
 
     public function edit(Request $request, $id)
@@ -45,21 +51,32 @@ class EmployeesController extends Controller
         $employee = Employee::find($id);
         if($request->get('name')) // literally had a comma after every if...
             $employee->name=$request->get('name');
-        return json_encode($employee);
+        
+        $employee->save();
+
+        return response()->json($employee);
+        // return json_encode($employee);
     }
 
     public function update(Request $request, $id) // update has to "update" everything
     {
         $employee= Employee::find($id);
-        $employee->name=$request->get('name');
-        return json_encode($employee);
-        // $employee->save();
+        $employee->name = $request->get('name'); // input('name'); ???
+
+        $employee->save();
+
+        return response()->json($employee);
+        // return json_encode($employee);
+        
     }
 
     public function destroy($id)
     {
         $employee = Employee::find($id);
+
         $employee->delete();
-        return redirect('employees')->with('success', 'Information has been deleted');
+
+        return response()->json('Employee removed successfully');
+        // return redirect('employees')->with('success', 'Information has been deleted');
     }
 }
